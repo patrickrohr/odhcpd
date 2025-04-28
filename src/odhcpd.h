@@ -327,6 +327,7 @@ struct interface {
 	bool ra_slaac;
 	bool ra_not_onlink;
 	bool ra_advrouter;
+	bool ra_pdpreferred;
 	bool ra_useleasetime;
 	bool ra_dns;
 	uint8_t pref64_length;

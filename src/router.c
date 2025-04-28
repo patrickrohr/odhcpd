@@ -29,6 +29,10 @@
 #include "router.h"
 #include "odhcpd.h"
 
+#ifndef ND_OPT_PI_FLAG_PDPREFERRED
+#define ND_OPT_PI_FLAG_PDPREFERRED 0x10
+#endif
+
 
 static void forward_router_solicitation(const struct interface *iface);
 static void forward_router_advertisement(const struct interface *iface, uint8_t *data, size_t len);
@@ -651,6 +655,8 @@ static int send_router_advert(struct interface *iface, const struct in6_addr *fr
 			p->nd_opt_pi_flags_reserved |= ND_OPT_PI_FLAG_AUTO;
 		if (iface->ra_advrouter)
 			p->nd_opt_pi_flags_reserved |= ND_OPT_PI_FLAG_RADDR;
+		if (iface->pd_preferred)
+			p->nd_opt_pi_flags_reserved |= ND_OPT_PI_FLAG_PDPREFERRED;
 		p->nd_opt_pi_preferred_time = htonl(preferred_lt);
 		p->nd_opt_pi_valid_time = htonl(valid_lt);
 	}
